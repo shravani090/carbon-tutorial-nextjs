@@ -16,7 +16,7 @@
     "format:diff": "prettier --list-different \"**/*.{js,md,scss}\""
   },
   "dependencies": {
-    "@carbon/react": "^1.35.0",
+    "@carbon/react": "^1.64.1",
     "eslint": "8.44.0",
     "eslint-config-next": "13.4.9",
     "next": "13.4.9",

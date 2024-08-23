@@ -1,0 +1,44 @@
+@use '@carbon/react/scss/spacing' as *;
+@use '@carbon/react/scss/type' as *;
+@use '@carbon/react/scss/breakpoint' as *;
+@use '@carbon/react/scss/theme' as *;
+@use './mixins.scss' as *;
+@use './overrides.scss';
+@use '@carbon/react/scss/spacing' as *;
+@use '@carbon/react/scss/type' as *;
+@use '@carbon/react/scss/breakpoint' as *;
+@use '@carbon/react/scss/theme' as *;
+html {
+  background-color: $layer-01;
+}
+
+.landing-page__banner,
+.landing-page__r2,
+.landing-page__r3 {
+  margin-left: -20px;
+  margin-right: -20px;
+
+  @include breakpoint-down(md) {
+    margin-left: 0;
+    margin-right: 0;
+  }
+}
+
+@media (max-width: 672px) {
+  .landing-page__illo {
+    width: 528px;
+    width: 100%;
+    height: auto;
+    float: inline-start;
+  }
+}
+
+@media (max-width: 320px) {
+  .landing-page__illo {
+    display: none;
+  }
+
+  .landing-page__banner {
+    padding-bottom: $spacing-05 * 4;
+  }
+}
