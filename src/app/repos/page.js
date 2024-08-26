@@ -1,73 +1,32 @@
 'use client';
+import React, { useEffect, useState } from 'react';
+import { Octokit } from '@octokit/core';
+import { Link, Grid, Column } from '@carbon/react';
 
-import RepoTable from './RepoTable';
-import { Column, Grid } from '@carbon/react';
-
-const headers = [
-  {
-    key: 'name',
-    header: 'Name',
-  },
-  {
-    key: 'createdAt',
-    header: 'Created',
-  },
-  {
-    key: 'updatedAt',
-    header: 'Updated',
-  },
-  {
-    key: 'issueCount',
-    header: 'Open Issues',
-  },
-  {
-    key: 'stars',
-    header: 'Stars',
-  },
-  {
-    key: 'links',
-    header: 'Links',
-  },
-];
-
-const rows = [
-  {
-    id: '1',
-    name: 'Repo 1',
-    createdAt: 'Date',
-    updatedAt: 'Date',
-    issueCount: '123',
-    stars: '456',
-    links: 'Links',
-  },
-  {
-    id: '2',
-    name: 'Repo 2',
-    createdAt: 'Date',
-    updatedAt: 'Date',
-    issueCount: '123',
-    stars: '456',
-    links: 'Links',
-  },
-  {
-    id: '3',
-    name: 'Repo 3',
-    createdAt: 'Date',
-    updatedAt: 'Date',
-    issueCount: '123',
-    stars: '456',
-    links: 'Links',
-  },
-];
-
+const octokitClient = new Octokit({});
 function RepoPage() {
-  return (
-    <Grid className="repo-page">
-      <Column lg={16} md={8} sm={4} className="repo-page__r1">
-        <RepoTable headers={headers} rows={rows} />
-      </Column>
-    </Grid>
-  );
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState();
+  const [rows, setRows] = useState([]);
+  useEffect(() => {
+    async function getCarbonRepos() {
+      const res = await octokitClient.request('GET /orgs/{org}/repos', {
+        org: 'carbon-design-system',
+        per_page: 75,
+        sort: 'updated',
+        direction: 'desc',
+      });
+
+      if (res.status === 200) {
+        setRows(getRowItems(res.data));
+      } else {
+        setError('Error obtaining repository data');
+      }
+      setLoading(false);
+    }
+
+    getCarbonRepos();
+  }, []);
 }
 
 export default RepoPage;
